@@ -12,9 +12,12 @@ This is a Splunk app designed to be used with the [HomeAssistant](https://home-a
  - For "All Tokens", select "Enabled", and click "Save"
  - Choose "New Token"
  - Give your token a name and click "Next"
- - Under "Source type", choose "Select", and then "Structured > homeassistant_event"
- - Under Index, set your index ("homeassistant", by default) as the "Default Index"
+ - Under "Source type", choose "Select", and then "Structured > _json"
+ - Under Index, select your desired index.
  - When you're done, you'll be given the "Token Value".  Place this in your HomeAssistant configuration as per the Splunk component's documentation.
+* If you are not using index=hass or index=homeassistant
+ - Go to Settings > Advanced search > Search macros 
+ - Edit 'homeassistant_index' and update the search to point to your desired index.
 
 ## Features
 * Provides analogues to HomeAssistant's native reporting, including a range-configurable History view and a filterable logbook.
