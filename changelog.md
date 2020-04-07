@@ -6,3 +6,4 @@
 - Removed the horrible props.conf. Updated Readme to specify to use sourcetype=_json instead.
 - Updated dashboard panels, to work with above marcos, and to allow better UI/choice design options.
 - Started working on a current status dashboard.
+- The logbook dashboard is more presentable now.
