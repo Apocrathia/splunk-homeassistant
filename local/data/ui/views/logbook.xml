@@ -36,11 +36,13 @@
       <table>
         <search>
           <query>`homeassistant_index` $domain$ entity_id=$entity_id$ 
+| sort _time 
 | streamstats window=1 current=f last(value) as old_value by entity_id 
+| sort - _time 
 | eval changed = IF(old_value!=value, "1", "0") 
 | search changed=1 
 | eval Friendly_Name='attributes.friendly_name' 
-| eval unit=COALESCE(" ".'attributes.unit_of_measurement', ""), old_value=TRIM(old_value.unit), value=TRIM(value.unit)
+| eval unit=COALESCE(" ".'attributes.unit_of_measurement', ""), old_value=TRIM(old_value.unit), value=TRIM(value.unit) 
 | table _time, domain, Friendly_Name, old_value value</query>
           <earliest>$timerange.earliest$</earliest>
           <latest>$timerange.latest$</latest>
