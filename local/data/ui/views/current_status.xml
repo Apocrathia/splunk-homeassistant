@@ -13,6 +13,8 @@
 | sort Name</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
         </search>
         <option name="drilldown">none</option>
         <option name="refresh.display">progressbar</option>
@@ -37,6 +39,8 @@
 | sort Name</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
         </search>
         <option name="drilldown">none</option>
         <option name="refresh.display">progressbar</option>
@@ -60,6 +64,8 @@
 | sort Name</query>
           <earliest>-24h@h</earliest>
           <latest>now</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
         </search>
         <option name="drilldown">none</option>
         <option name="refresh.display">progressbar</option>
