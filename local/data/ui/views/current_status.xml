@@ -1,0 +1,52 @@
+<dashboard>
+  <label>Current Status</label>
+  <row>
+    <panel>
+      <title>Switches</title>
+      <table>
+        <search>
+          <query>`homeassistant_index` domain=switch
+| stats latest(value) as Status, latest(attributes.friendly_name) as Name by entity_id
+| search Status!=unavailable
+| eval Status=case(Status=1, "on", Status=0, "off", true(), Status)
+| table Name Status
+| sort Name</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="value">
+          <colorPalette type="map">{"on":#53A051,"off":#F1813F}</colorPalette>
+        </format>
+        <format type="number" field="Status"></format>
+        <format type="color" field="Status">
+          <colorPalette type="map">{"on":#53A051,"off":#F1813F}</colorPalette>
+        </format>
+      </table>
+    </panel>
+    <panel>
+      <title>Lights</title>
+      <table>
+        <search>
+          <query>`homeassistant_index` domain=light
+| stats latest(value) as Status, latest(attributes.friendly_name) as Name by entity_id
+| search Status!=unavailable
+| eval Status=case(Status=1, "on", Status=0, "off", true(), Status)
+| table Name Status
+| sort Name</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+        <format type="color" field="value">
+          <colorPalette type="map">{"on":#53A051,"off":#F1813F}</colorPalette>
+        </format>
+        <format type="color" field="Status">
+          <colorPalette type="map">{"on":#53A051,"off":#F1813F}</colorPalette>
+        </format>
+      </table>
+    </panel>
+  </row>
+</dashboard>
