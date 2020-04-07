@@ -19,3 +19,7 @@ modtime = 1453324015.144942000
 owner = admin
 version = 6.3.2
 modtime = 1453325402.108645000
+
+[views/logbook]
+version = 8.0.3
+modtime = 1586287445.818947000
