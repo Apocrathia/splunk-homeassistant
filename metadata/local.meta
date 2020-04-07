@@ -22,7 +22,7 @@ modtime = 1453325402.108645000
 
 [views/logbook]
 version = 8.0.3
-modtime = 1586287445.818947000
+modtime = 1586290640.693344000
 
 [nav/default]
 version = 8.0.3
@@ -31,4 +31,4 @@ modtime = 1586288881.225810000
 [views/current_status]
 owner = admin
 version = 8.0.3
-modtime = 1586288782.809106000
+modtime = 1586290733.366827000
