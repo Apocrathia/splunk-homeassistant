@@ -7,7 +7,7 @@ This is a Splunk app designed to be used with the [HomeAssistant](https://home-a
 
 ## Installation
 1. Install the app by copying the `homeassistant` directory to `$SPLUNK_HOME/etc/apps/homeassistant` and restarting Splunk so that the app is recognized.
-2. Create an index for home assistant (If you wish to use a custom index name)
+2. Create an index for home assistant (For basic configuration, you can skip this step.)
     - Goto Settings > Indexes, Click New Index
     - Pick an index name. I recommend "homeassistant" or "hass"
     - Leave the other options as default.
@@ -22,7 +22,7 @@ This is a Splunk app designed to be used with the [HomeAssistant](https://home-a
     - Under "Source type", choose "Select", and then "Structured > _json"
     - Under Index, select your desired index. Select the index you created in the 2nd step.
     - When you're done, you'll be given the "Token Value".  Place this in your HomeAssistant configuration as per the Splunk component's documentation.
-5. If you are not using index=hass or index=homeassistant
+5. If you are not using index=hass or index=homeassistant (For basic configuration, you can skip this step.)
     - Go to Settings > Advanced search > Search macros 
     - Edit 'homeassistant_index' and update the search to point to your desired index.
 6. Finally, you need to complete the configuration from within home assistant.
