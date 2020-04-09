@@ -7,9 +7,9 @@ This is a Splunk app designed to be used with the [HomeAssistant](https://home-a
 
 ## Installation
 1. Install the app by copying the `homeassistant` directory to `$SPLUNK_HOME/etc/apps/homeassistant` and restarting Splunk so that the app is recognized.
-2. Create an index for home assistant
-    * Goto Settings > Indexes, Click New Index
-    * Pick an index name. I recommend "homeassistant" or "hass"
+2. Create an index for home assistant (If you wish to use a custom index name)
+    - Goto Settings > Indexes, Click New Index
+    - Pick an index name. I recommend "homeassistant" or "hass"
     - Leave the other options as default.
     - Click Save
 3. Enable the Http Event Collector
