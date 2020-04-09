@@ -6,22 +6,27 @@ This is a Splunk app designed to be used with the [HomeAssistant](https://home-a
 * HomeAssistant installed on a machine that can connect to the one running Splunk.
 
 ## Installation
-* Install the app by copying the `homeassistant` directory to `$SPLUNK_HOME/etc/apps/homeassistant` and restarting Splunk so that the app is recognized.
-* At this moment, you must manually enable the HTTP Event Collector and add a token for HomeAssistant:
-* To Enable the HEC
-  - Go Settings > Data Inputs and choose HTTP Event Collector
-  - For "All Tokens", select "Enabled", and click "Save"
-* To Create a New Token
-  - Choose "New Token"
-  - Give your token a name and click "Next"
-  - Under "Source type", choose "Select", and then "Structured > _json"
-  - Under Index, select your desired index. I recommend using index=hass or index=homeassistant
- - When you're done, you'll be given the "Token Value".  Place this in your HomeAssistant configuration as per the Splunk component's documentation.
-* If you are not using index=hass or index=homeassistant
-  - Go to Settings > Advanced search > Search macros 
-  - Edit 'homeassistant_index' and update the search to point to your desired index.
-* Finally, you need to complete the configuration from within home assistant.
-  - Follow the documentation here: https://www.home-assistant.io/integrations/splunk/
+1. Install the app by copying the `homeassistant` directory to `$SPLUNK_HOME/etc/apps/homeassistant` and restarting Splunk so that the app is recognized.
+2. Create an index for home assistant
+    * Goto Settings > Indexes, Click New Index
+    * Pick an index name. I recommend "homeassistant" or "hass"
+    - Leave the other options as default.
+    - Click Save
+3. Enable the Http Event Collector
+    - To Enable the HEC
+    - Go Settings > Data Inputs and choose HTTP Event Collector
+    - For "All Tokens", select "Enabled", and click "Save"
+4. Create a new HEC Token
+    - Choose "New Token"
+    - Give your token a name and click "Next"
+    - Under "Source type", choose "Select", and then "Structured > _json"
+    - Under Index, select your desired index. Select the index you created in the 2nd step.
+    - When you're done, you'll be given the "Token Value".  Place this in your HomeAssistant configuration as per the Splunk component's documentation.
+5. If you are not using index=hass or index=homeassistant
+    - Go to Settings > Advanced search > Search macros 
+    - Edit 'homeassistant_index' and update the search to point to your desired index.
+6. Finally, you need to complete the configuration from within home assistant.
+    - Follow the documentation here: https://www.home-assistant.io/integrations/splunk/
 
 ## Features
 * Provides analogues to HomeAssistant's native reporting, including a range-configurable History view and a filterable logbook.
