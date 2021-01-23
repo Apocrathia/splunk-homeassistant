@@ -8,9 +8,28 @@
         <latest>now</latest>
       </default>
     </input>
+    <input type="multiselect" token="domain" searchWhenChanged="true">
+      <label>Domain Filter</label>
+      <default>*</default>
+      <choice value="*">ALL</choice>
+      <prefix>domain IN (</prefix>
+      <suffix>)</suffix>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <delimiter>, </delimiter>
+      <fieldForLabel>domain</fieldForLabel>
+      <fieldForValue>domain</fieldForValue>
+      <search>
+        <query>`homeassistant_index`
+| stats count by domain</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
   </fieldset>
   <row>
-    <html>
+    <panel>
+      <html>
             <h2>History</h2>
             <div id="history-search" class="splunk-manager" data-require="splunkjs/mvc/searchmanager" data-options="{                     &quot;search&quot;: { &quot;type&quot;: &quot;token_safe&quot;, &quot;value&quot;: &quot;index = homeassistant |where isint(value) OR NOT isnum(value) |sort -_time,entity_id| dedup entity_id,value consecutive=true|streamstats range(_time) by entity_id window=2 global=f| table _time, domain, entity_id, value, range(_time)|rename range(_time) as duration|search NOT (domain=device_tracker AND duration=0)|eval duration=if(duration==0,now()-_time,duration)&quot; },                     &quot;earliest_time&quot;: { &quot;type&quot;: &quot;token_safe&quot;, &quot;value&quot;: &quot;$$time.earliest$$&quot; },                     &quot;latest_time&quot;: { &quot;type&quot;: &quot;token_safe&quot;, &quot;value&quot;: &quot;$$time.latest$$&quot; },                     &quot;cancelOnUnload&quot;: true,                     &quot;preview&quot;: true                  }">
             </div>
@@ -18,14 +37,19 @@
             <div id="history-view" class="splunk-view" data-require="app/homeassistant/components/gantt/gantt" data-options="{                     &quot;managerid&quot;: &quot;history-search&quot;,                     &quot;startField&quot;: &quot;_time&quot;,                     &quot;durationField&quot;: &quot;duration&quot;,                     &quot;categoryLabel&quot;: &quot;Entity&quot;,                     &quot;categoryField&quot;: &quot;entity_id&quot;,                     &quot;seriesLabel&quot;: &quot;Value&quot;,                     &quot;seriesField&quot;: &quot;value&quot;,                     &quot;timeAxisMode&quot; : &quot;DATA_RANGE&quot;                  }">
             </div>
         </html>
+    </panel>
   </row>
   <row>
     <panel>
       <chart>
         <search>
-          <query>index = homeassistant |where isnum(value) AND NOT isint(value)|timechart avg(value) by entity_id</query>
-          <earliest>-24h@h</earliest>
-          <latest>now</latest>
+          <query>`homeassistant_index` $domain$
+| where isnum(value) AND NOT isint(value) 
+| timechart avg(value) by entity_id</query>
+          <earliest>$time.earliest$</earliest>
+          <latest>$time.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
         </search>
         <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
         <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
@@ -40,7 +64,7 @@
         <option name="charting.chart.bubbleMaximumSize">50</option>
         <option name="charting.chart.bubbleMinimumSize">10</option>
         <option name="charting.chart.bubbleSizeBy">area</option>
-        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.nullValueMode">connect</option>
         <option name="charting.chart.showDataLabels">none</option>
         <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
         <option name="charting.chart.stackMode">default</option>
@@ -50,6 +74,7 @@
         <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
         <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
         <option name="charting.legend.placement">right</option>
+        <option name="refresh.display">progressbar</option>
       </chart>
     </panel>
   </row>

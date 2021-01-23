@@ -1,8 +1,9 @@
 <nav search_view="search" color="#038FC7">
-  <view name="search" default='true' />
-  <view name="dashboards" />
+  <view name="current_status" />
   <view name="logbook" />
   <view name="statushistory" />
   <view name="device_tracker" />
   <view name="energy_usage"/>
+  <view name="search" default='true' />
+  <view name="dashboards" />
 </nav>
