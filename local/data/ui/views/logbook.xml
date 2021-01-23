@@ -1,0 +1,61 @@
+<form>
+  <label>Logbook</label>
+  <fieldset submitButton="true">
+    <input type="time" token="timerange" searchWhenChanged="false">
+      <label></label>
+      <default>
+        <earliest>@d</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+    <input type="multiselect" token="domain" searchWhenChanged="true">
+      <label>Domain Filter</label>
+      <default>*</default>
+      <choice value="*">ALL</choice>
+      <prefix>domain IN (</prefix>
+      <suffix>)</suffix>
+      <valuePrefix>"</valuePrefix>
+      <valueSuffix>"</valueSuffix>
+      <delimiter>, </delimiter>
+      <fieldForLabel>domain</fieldForLabel>
+      <fieldForValue>domain</fieldForValue>
+      <search>
+        <query>`homeassistant_index`
+| stats count by domain</query>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </search>
+    </input>
+    <input type="text" token="entity_id">
+      <label>Entity ID Filter</label>
+      <default>*</default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <table>
+        <search>
+          <query>`homeassistant_index` $domain$ entity_id=$entity_id$ 
+| sort _time 
+| streamstats window=1 current=f last(value) as old_value by entity_id 
+| sort - _time 
+| eval changed = IF(old_value!=value, "1", "0") 
+| search changed=1 
+| eval Friendly_Name='attributes.friendly_name' 
+| eval unit=COALESCE(" ".'attributes.unit_of_measurement', ""), old_value=TRIM(old_value.unit), value=TRIM(value.unit) 
+| table _time, domain, Friendly_Name, old_value value</query>
+          <earliest>$timerange.earliest$</earliest>
+          <latest>$timerange.latest$</latest>
+          <refresh>30s</refresh>
+          <refreshType>delay</refreshType>
+        </search>
+        <option name="count">40</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">cell</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

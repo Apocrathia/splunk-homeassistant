@@ -19,3 +19,23 @@ modtime = 1453324015.144942000
 owner = admin
 version = 6.3.2
 modtime = 1453325402.108645000
+
+[views/logbook]
+version = 8.0.3
+modtime = 1586291276.647643000
+
+[nav/default]
+version = 8.0.3
+modtime = 1586288881.225810000
+
+[views/current_status]
+owner = admin
+version = 8.0.3
+modtime = 1586291385.337012000
+
+[macros/homeassistant_index]
+access = read : [ * ]
+export = system
+owner = admin
+version = 8.0.3
+modtime = 1586435704.500622000
